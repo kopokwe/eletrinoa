@@ -49,7 +49,7 @@ export default function ModuleFinal({ onBack, onComplete, progress }) {
             <TheoryBlock title="El display TDSR 5160 G" pageRef="Proyecto" color={COLOR}>
               <p>Tu display tiene <strong>7 segmentos</strong> (a–g) + punto decimal (dp).</p>
               <p>Cada segmento es un <strong>LED individual</strong> — como el del Módulo 3.</p>
-              <p>Tipo: <strong>cátodo común</strong> — todos los LEDs comparten GND.</p>
+              <p>Tipo: <strong>cátodo común</strong> — todos los LEDs comparten el negativo (−).</p>
               <p className="text-xs text-muted-foreground mt-2">10 pines: 2 comunes (cátodo) + 7 segmentos + 1 punto decimal</p>
             </TheoryBlock>
 
@@ -216,10 +216,10 @@ export default function ModuleFinal({ onBack, onComplete, progress }) {
                   <p>Pincha el display en la breadboard <strong>a caballo del surco central</strong>.</p>
                 </BuildStep>
                 <BuildStep step={2} color={COLOR}>
-                  <p>Identifica un pin de <strong>cátodo común</strong> (pin 3 o 8) → cable al raíl −</p>
+                  <p>Identifica un pin de <strong>cátodo común</strong> (pin 3 o 8) → cable a la <strong>columna L</strong> (−)</p>
                 </BuildStep>
                 <BuildStep step={3} color={COLOR}>
-                  <p>Elige un pin de segmento → <strong>R de 330Ω</strong> → raíl +</p>
+                  <p>Elige un pin de segmento → <strong>R de 330Ω</strong> → cable a la <strong>columna A</strong> (+)</p>
                 </BuildStep>
                 <BuildStep step={4} color={COLOR}>
                   <p>¿Se enciende? <strong>¡Primer segmento!</strong></p>
@@ -242,10 +242,10 @@ export default function ModuleFinal({ onBack, onComplete, progress }) {
                   <Seg7Display activeSegments={['b', 'c']} activeColor={COLOR} size={100} showLabels />
                 </div>
                 <BuildStep step={1} color={COLOR}>
-                  <p>Conecta el <strong>segmento b</strong> con su propia R de 330Ω al raíl +</p>
+                  <p>Conecta el <strong>segmento b</strong> con su propia R de 330Ω a la <strong>columna A</strong> (+)</p>
                 </BuildStep>
                 <BuildStep step={2} color={COLOR}>
-                  <p>Conecta el <strong>segmento c</strong> con otra R de 330Ω al raíl +</p>
+                  <p>Conecta el <strong>segmento c</strong> con otra R de 330Ω a la <strong>columna A</strong> (+)</p>
                 </BuildStep>
                 <p className="text-xs text-muted-foreground text-center">
                   Solo 2 resistencias necesarias para el "1"

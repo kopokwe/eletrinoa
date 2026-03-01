@@ -82,8 +82,25 @@ export default function Module3({ onBack, onComplete, progress }) {
               <strong>Antes de empezar:</strong> Asegúrate de que la fuente Mean Well está APAGADA. Nunca montes con corriente.
             </WarningBox>
 
+            <TheoryBlock title="Tu breadboard Ariston" pageRef="Proyecto" color={COLOR}>
+              <p>Tu Ariston tiene <strong>12 columnas</strong> (A–L) y ~46 filas, con un canal central que separa el lado izquierdo (G–L) del derecho (A–F).</p>
+              <div className="bg-secondary/50 rounded p-3 mt-2 font-mono text-xs space-y-2">
+                <p><strong className="text-red-400">Columna A</strong> (borde derecho) = tu <strong>+V</strong> — cable rojo de la Mean Well aquí</p>
+                <p><strong className="text-blue-400">Columna L</strong> (borde izquierdo) = tu <strong>−</strong> — cable negro de la Mean Well aquí</p>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                Cada fila tiene 5 agujeros conectados entre sí por lado: B,C,D,E,F (derecha) y G,H,I,J,K (izquierda). Las columnas A y L son los buses de alimentación — recorren toda la placa como las tiras rojas/azules de las breadboards modernas.
+              </p>
+              <div className="bg-secondary/30 rounded p-2 mt-2 font-mono text-[10px] text-muted-foreground text-center whitespace-pre leading-relaxed">
+{`L  K J I H G │ F E D C B  A
+−  · · · · · │ · · · · ·  +
+   ─────────   ─────────
+   conectados   conectados`}
+              </div>
+            </TheoryBlock>
+
             <BuildStep step={1} color={COLOR}>
-              <p><strong>Conecta la fuente</strong> a la breadboard: cable rojo al rail + (rojo), cable negro al rail − (azul).</p>
+              <p><strong>Conecta la fuente</strong>: cable rojo a la <strong>columna A</strong> (+), cable negro a la <strong>columna L</strong> (−). NO enciendas todavía.</p>
             </BuildStep>
 
             <BuildStep step={2} color={COLOR} warning="Revisa la polaridad: pata larga al lado del +">
@@ -91,11 +108,11 @@ export default function Module3({ onBack, onComplete, progress }) {
             </BuildStep>
 
             <BuildStep step={3} color={COLOR}>
-              <p><strong>Coloca la resistencia</strong> (~330Ω o 470Ω de tu bolsa) conectando el ánodo del LED al rail + de la breadboard.</p>
+              <p><strong>Coloca la resistencia</strong> (~330Ω o 470Ω de tu bolsa) conectando el ánodo del LED al <strong>+</strong> (tira un cable desde la columna A).</p>
             </BuildStep>
 
             <BuildStep step={4} color={COLOR}>
-              <p><strong>Conecta el cátodo</strong> (pata corta del LED) al rail − (GND) con un cable.</p>
+              <p><strong>Conecta el cátodo</strong> (pata corta del LED) al <strong>−</strong> (tira un cable a la columna L).</p>
             </BuildStep>
 
             <BuildStep step={5} color={COLOR}>

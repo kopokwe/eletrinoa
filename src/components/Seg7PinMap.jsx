@@ -6,12 +6,12 @@ import Seg7Display from './Seg7Display'
 const PIN_MAP = {
   1: { segment: 'e', label: 'e' },
   2: { segment: 'd', label: 'd' },
-  3: { segment: null, label: 'GND' },
+  3: { segment: null, label: '(−)' },
   4: { segment: 'c', label: 'c' },
   5: { segment: 'dp', label: 'dp' },
   6: { segment: 'b', label: 'b' },
   7: { segment: 'a', label: 'a' },
-  8: { segment: null, label: 'GND' },
+  8: { segment: null, label: '(−)' },
   9: { segment: 'f', label: 'f' },
   10: { segment: 'g', label: 'g' },
 }
@@ -118,7 +118,7 @@ export default function Seg7PinMap({ color = '#c084fc' }) {
           />
           {pinInfo && (
             <p className="text-sm font-mono text-center" style={{ color }}>
-              Pin {activePin} → {pinInfo.segment ? `segmento ${pinInfo.segment}` : 'Cátodo común (GND)'}
+              Pin {activePin} → {pinInfo.segment ? `segmento ${pinInfo.segment}` : 'Cátodo común (negativo, −)'}
             </p>
           )}
           {!pinInfo && (

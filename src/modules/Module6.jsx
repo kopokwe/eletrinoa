@@ -95,10 +95,10 @@ export default function Module6({ onBack, onComplete, progress }) {
               <p><strong>Busca 2 resistencias</strong> de ~1kΩ de tu bolsa clasificada.</p>
             </BuildStep>
             <BuildStep step={2} color={COLOR}>
-              <p><strong>Conéctalas en paralelo</strong>: ambas van entre los mismos dos puntos (rail + y rail −).</p>
+              <p><strong>Conéctalas en paralelo</strong>: ambas van entre los mismos dos puntos (cable desde <strong>columna A</strong> y cable a <strong>columna L</strong>).</p>
             </BuildStep>
             <BuildStep step={3} color={COLOR}>
-              <p><strong>Conecta la fuente</strong> a los rails.</p>
+              <p><strong>Conecta la fuente</strong> (ya debería estar en columnas A y L).</p>
             </BuildStep>
             <BuildStep step={4} color={COLOR}>
               <p><strong>Enciende</strong> y verifica 10V.</p>

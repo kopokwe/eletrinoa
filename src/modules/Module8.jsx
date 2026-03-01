@@ -82,13 +82,13 @@ export default function Module8({ onBack, onComplete, progress }) {
             </WarningBox>
 
             <BuildStep step={1} color={COLOR}>
-              <p><strong>Conecta pata 1</strong> del potenciómetro al rail + (10V).</p>
+              <p><strong>Conecta pata 1</strong> del potenciómetro a la <strong>columna A</strong> (+10V).</p>
             </BuildStep>
             <BuildStep step={2} color={COLOR}>
-              <p><strong>Conecta pata 3</strong> al rail − (GND).</p>
+              <p><strong>Conecta pata 3</strong> a la <strong>columna L</strong> (−).</p>
             </BuildStep>
             <BuildStep step={3} color={COLOR}>
-              <p><strong>Mide la pata central (2)</strong> con el Venlab en modo V DC respecto a GND.</p>
+              <p><strong>Mide la pata central (2)</strong> con el Venlab en modo V DC respecto al − (columna L).</p>
             </BuildStep>
             <BuildStep step={4} color={COLOR}>
               <p><strong>Gira el eje</strong> y observa cómo cambia el voltaje de 0V a 10V.</p>

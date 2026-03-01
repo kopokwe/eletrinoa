@@ -94,7 +94,7 @@ export default function Module5({ onBack, onComplete, progress }) {
               <p><strong>Conéctalas en serie</strong>: R1 → R2 → R3, una tras otra en la breadboard.</p>
             </BuildStep>
             <BuildStep step={3} color={COLOR}>
-              <p><strong>Conecta la fuente</strong>: rail + al inicio de R1, rail − al final de R3.</p>
+              <p><strong>Conecta la fuente</strong>: cable desde la <strong>columna A</strong> (+) al inicio de R1, cable desde el final de R3 a la <strong>columna L</strong> (−).</p>
             </BuildStep>
             <BuildStep step={4} color={COLOR}>
               <p><strong>Enciende la fuente</strong> y verifica 10V con el Venlab.</p>

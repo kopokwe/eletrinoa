@@ -101,10 +101,10 @@ export default function Module7({ onBack, onComplete, progress }) {
             <WarningBox>Fuente APAGADA. Vas a montar el circuito mixto del jefe final.</WarningBox>
 
             <BuildStep step={1} color={COLOR}>
-              <p><strong>Coloca R1 (220Ω)</strong> desde el rail + a una fila intermedia de la breadboard.</p>
+              <p><strong>Coloca R1 (220Ω)</strong> desde la <strong>columna A</strong> (+) a una fila intermedia de la breadboard.</p>
             </BuildStep>
             <BuildStep step={2} color={COLOR}>
-              <p><strong>Coloca R2 (1kΩ)</strong> desde esa fila intermedia al rail −.</p>
+              <p><strong>Coloca R2 (1kΩ)</strong> desde esa fila intermedia a la <strong>columna L</strong> (−).</p>
             </BuildStep>
             <BuildStep step={3} color={COLOR}>
               <p><strong>Coloca R3 (1kΩ)</strong> en paralelo con R2: entre los mismos dos puntos.</p>
