@@ -2,7 +2,7 @@ import { MODULES } from '@/data/modules'
 import { Button } from '@/components/ui/button'
 import ModuleCard from '@/components/ModuleCard'
 import ProgressRing from '@/components/ProgressRing'
-import { BookOpen, Package, Trophy, FileText } from 'lucide-react'
+import { BookOpen, Package, Trophy, FileText, Monitor } from 'lucide-react'
 
 export default function Home({ onNavigate, getModuleProgress, isModuleUnlocked, isModuleComplete, completedCount }) {
   return (
@@ -19,7 +19,7 @@ export default function Home({ onNavigate, getModuleProgress, isModuleUnlocked, 
       </div>
 
       {/* Quick Access Buttons */}
-      <div className="grid grid-cols-4 gap-2 mb-6">
+      <div className="grid grid-cols-5 gap-2 mb-6">
         <Button variant="outline" size="sm" className="flex-col h-16 gap-1" onClick={() => onNavigate('formulas')}>
           <BookOpen className="h-4 w-4" />
           <span className="text-[10px]">Fórmulas</span>
@@ -27,6 +27,10 @@ export default function Home({ onNavigate, getModuleProgress, isModuleUnlocked, 
         <Button variant="outline" size="sm" className="flex-col h-16 gap-1" onClick={() => onNavigate('inventory')}>
           <Package className="h-4 w-4" />
           <span className="text-[10px]">Inventario</span>
+        </Button>
+        <Button variant="outline" size="sm" className="flex-col h-16 gap-1" onClick={() => onNavigate('virtual-lab')}>
+          <Monitor className="h-4 w-4" />
+          <span className="text-[10px]">Lab Virtual</span>
         </Button>
         <Button variant="outline" size="sm" className="flex-col h-16 gap-1" onClick={() => onNavigate('achievements')}>
           <Trophy className="h-4 w-4" />

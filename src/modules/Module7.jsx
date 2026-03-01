@@ -9,6 +9,9 @@ import WarningBox from '@/components/WarningBox'
 import MeasureChecklist from '@/components/MeasureChecklist'
 import DynamicCircuitTable from '@/components/DynamicCircuitTable'
 import { QUIZZES } from '@/data/quizzes'
+import VirtualModeToggle from '@/components/breadboard/VirtualModeToggle'
+import BreadboardSimulator from '@/components/breadboard/BreadboardSimulator'
+import { BOARD_EXERCISES } from '@/data/boardExercises'
 
 const COLOR = '#f97316'
 
@@ -97,29 +100,39 @@ export default function Module7({ onBack, onComplete, progress }) {
         )}
 
         {activePhase === 'construye' && (
-          <div className="space-y-3">
-            <WarningBox>Fuente APAGADA. Vas a montar el circuito mixto del jefe final.</WarningBox>
+          <VirtualModeToggle color={COLOR}>
+            {(mode) => mode === 'fisico' ? (
+              <div className="space-y-3">
+                <WarningBox>Fuente APAGADA. Vas a montar el circuito mixto del jefe final.</WarningBox>
 
-            <BuildStep step={1} color={COLOR}>
-              <p><strong>Coloca R1 (220Ω)</strong> desde la <strong>columna A</strong> (+) a una fila intermedia de la breadboard.</p>
-            </BuildStep>
-            <BuildStep step={2} color={COLOR}>
-              <p><strong>Coloca R2 (1kΩ)</strong> desde esa fila intermedia a la <strong>columna L</strong> (−).</p>
-            </BuildStep>
-            <BuildStep step={3} color={COLOR}>
-              <p><strong>Coloca R3 (1kΩ)</strong> en paralelo con R2: entre los mismos dos puntos.</p>
-            </BuildStep>
-            <BuildStep step={4} color={COLOR}>
-              <p><strong>Conecta la fuente</strong> y enciéndela.</p>
-            </BuildStep>
+                <BuildStep step={1} color={COLOR}>
+                  <p><strong>Coloca R1 (220Ω)</strong> desde la <strong>columna A</strong> (+) a una fila intermedia de la breadboard.</p>
+                </BuildStep>
+                <BuildStep step={2} color={COLOR}>
+                  <p><strong>Coloca R2 (1kΩ)</strong> desde esa fila intermedia a la <strong>columna L</strong> (−).</p>
+                </BuildStep>
+                <BuildStep step={3} color={COLOR}>
+                  <p><strong>Coloca R3 (1kΩ)</strong> en paralelo con R2: entre los mismos dos puntos.</p>
+                </BuildStep>
+                <BuildStep step={4} color={COLOR}>
+                  <p><strong>Conecta la fuente</strong> y enciéndela.</p>
+                </BuildStep>
 
-            <Button
-              className="w-full" style={{ backgroundColor: COLOR }}
-              onClick={() => { progress.completePhase(7, 'construye'); setActivePhase('comprueba') }}
-            >
-              ¡Circuito mixto montado! Vamos a medir →
-            </Button>
-          </div>
+                <Button
+                  className="w-full" style={{ backgroundColor: COLOR }}
+                  onClick={() => { progress.completePhase(7, 'construye'); setActivePhase('comprueba') }}
+                >
+                  ¡Circuito mixto montado! Vamos a medir →
+                </Button>
+              </div>
+            ) : (
+              <BreadboardSimulator
+                exercise={BOARD_EXERCISES[7]}
+                color={COLOR}
+                onValidated={() => { progress.completePhase(7, 'construye'); setActivePhase('comprueba') }}
+              />
+            )}
+          </VirtualModeToggle>
         )}
 
         {activePhase === 'comprueba' && (

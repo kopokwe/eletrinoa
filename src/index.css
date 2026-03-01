@@ -122,3 +122,93 @@
     @apply bg-background text-foreground;
     }
 }
+
+/* ── Breadboard simulator animations ── */
+
+/* Current flow: marching dashes along wires */
+@keyframes current-flow {
+  from { stroke-dashoffset: 16; }
+  to { stroke-dashoffset: 0; }
+}
+.wire-current {
+  stroke-dasharray: 4 4;
+  animation: current-flow 0.6s linear infinite;
+}
+
+/* LED glow pulsing */
+@keyframes led-glow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+.led-glow {
+  animation: led-glow 2s ease-in-out infinite;
+}
+
+/* Component shake for delete selection */
+@keyframes comp-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-1.5px); }
+  40% { transform: translateX(1.5px); }
+  60% { transform: translateX(-1px); }
+  80% { transform: translateX(1px); }
+}
+.comp-shake {
+  animation: comp-shake 0.3s ease-out;
+}
+
+/* Delete badge pop-in */
+@keyframes badge-pop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.delete-badge {
+  animation: badge-pop 0.2s ease-out;
+}
+
+/* Short-circuit smoke particle */
+@keyframes smoke-rise {
+  0% { opacity: 0.6; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-20px) scale(2); }
+}
+.smoke-particle {
+  animation: smoke-rise 1.5s ease-out forwards;
+}
+
+/* Short-circuit board flash (tuned for cream board surface) */
+@keyframes board-flash {
+  0%, 100% { opacity: 0; }
+  15% { opacity: 0.2; }
+  30% { opacity: 0; }
+  45% { opacity: 0.12; }
+}
+.board-flash {
+  animation: board-flash 2s ease-out infinite;
+}
+
+/* Heat shimmer on overloaded resistors */
+@keyframes heat-shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+.heat-shimmer {
+  animation: heat-shimmer 1s ease-in-out infinite;
+}
+
+/* X-ray reveal: staggered fade-in */
+@keyframes xray-reveal {
+  from { opacity: 0; transform: scaleY(0.8); }
+  to { opacity: 0.25; transform: scaleY(1); }
+}
+.xray-band {
+  animation: xray-reveal 0.3s ease-out forwards;
+}
+
+/* Hide scrollbar for catalog strip */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

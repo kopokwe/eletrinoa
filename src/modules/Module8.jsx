@@ -9,6 +9,9 @@ import WarningBox from '@/components/WarningBox'
 import MeasureChecklist from '@/components/MeasureChecklist'
 import VirtualLabSlider from '@/components/VirtualLabSlider'
 import { QUIZZES } from '@/data/quizzes'
+import VirtualModeToggle from '@/components/breadboard/VirtualModeToggle'
+import BreadboardSimulator from '@/components/breadboard/BreadboardSimulator'
+import { BOARD_EXERCISES } from '@/data/boardExercises'
 
 const COLOR = '#fbbf24'
 
@@ -76,31 +79,41 @@ export default function Module8({ onBack, onComplete, progress }) {
         )}
 
         {activePhase === 'construye' && (
-          <div className="space-y-3">
-            <WarningBox>
-              El potenciómetro puede no caber bien en la breadboard. Si el eje es metálico, usa cables para conectar las patas.
-            </WarningBox>
+          <VirtualModeToggle color={COLOR}>
+            {(mode) => mode === 'fisico' ? (
+              <div className="space-y-3">
+                <WarningBox>
+                  El potenciómetro puede no caber bien en la breadboard. Si el eje es metálico, usa cables para conectar las patas.
+                </WarningBox>
 
-            <BuildStep step={1} color={COLOR}>
-              <p><strong>Conecta pata 1</strong> del potenciómetro a la <strong>columna A</strong> (+10V).</p>
-            </BuildStep>
-            <BuildStep step={2} color={COLOR}>
-              <p><strong>Conecta pata 3</strong> a la <strong>columna L</strong> (−).</p>
-            </BuildStep>
-            <BuildStep step={3} color={COLOR}>
-              <p><strong>Mide la pata central (2)</strong> con el Venlab en modo V DC respecto al − (columna L).</p>
-            </BuildStep>
-            <BuildStep step={4} color={COLOR}>
-              <p><strong>Gira el eje</strong> y observa cómo cambia el voltaje de 0V a 10V.</p>
-            </BuildStep>
+                <BuildStep step={1} color={COLOR}>
+                  <p><strong>Conecta pata 1</strong> del potenciómetro a la <strong>columna A</strong> (+10V).</p>
+                </BuildStep>
+                <BuildStep step={2} color={COLOR}>
+                  <p><strong>Conecta pata 3</strong> a la <strong>columna L</strong> (−).</p>
+                </BuildStep>
+                <BuildStep step={3} color={COLOR}>
+                  <p><strong>Mide la pata central (2)</strong> con el Venlab en modo V DC respecto al − (columna L).</p>
+                </BuildStep>
+                <BuildStep step={4} color={COLOR}>
+                  <p><strong>Gira el eje</strong> y observa cómo cambia el voltaje de 0V a 10V.</p>
+                </BuildStep>
 
-            <Button
-              className="w-full" style={{ backgroundColor: COLOR }}
-              onClick={() => { progress.completePhase(8, 'construye'); setActivePhase('comprueba') }}
-            >
-              ¡Funciona! Vamos a medir →
-            </Button>
-          </div>
+                <Button
+                  className="w-full" style={{ backgroundColor: COLOR }}
+                  onClick={() => { progress.completePhase(8, 'construye'); setActivePhase('comprueba') }}
+                >
+                  ¡Funciona! Vamos a medir →
+                </Button>
+              </div>
+            ) : (
+              <BreadboardSimulator
+                exercise={BOARD_EXERCISES[8]}
+                color={COLOR}
+                onValidated={() => { progress.completePhase(8, 'construye'); setActivePhase('comprueba') }}
+              />
+            )}
+          </VirtualModeToggle>
         )}
 
         {activePhase === 'comprueba' && (

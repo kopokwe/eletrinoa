@@ -8,6 +8,9 @@ import BuildStep from '@/components/BuildStep'
 import WarningBox from '@/components/WarningBox'
 import MeasureChecklist from '@/components/MeasureChecklist'
 import { QUIZZES } from '@/data/quizzes'
+import VirtualModeToggle from '@/components/breadboard/VirtualModeToggle'
+import BreadboardSimulator from '@/components/breadboard/BreadboardSimulator'
+import { BOARD_EXERCISES } from '@/data/boardExercises'
 
 const COLOR = '#4ade80'
 
@@ -88,29 +91,39 @@ export default function Module6({ onBack, onComplete, progress }) {
         )}
 
         {activePhase === 'construye' && (
-          <div className="space-y-3">
-            <WarningBox>Fuente APAGADA antes de montar.</WarningBox>
+          <VirtualModeToggle color={COLOR}>
+            {(mode) => mode === 'fisico' ? (
+              <div className="space-y-3">
+                <WarningBox>Fuente APAGADA antes de montar.</WarningBox>
 
-            <BuildStep step={1} color={COLOR}>
-              <p><strong>Busca 2 resistencias</strong> de ~1kΩ de tu bolsa clasificada.</p>
-            </BuildStep>
-            <BuildStep step={2} color={COLOR}>
-              <p><strong>Conéctalas en paralelo</strong>: ambas van entre los mismos dos puntos (cable desde <strong>columna A</strong> y cable a <strong>columna L</strong>).</p>
-            </BuildStep>
-            <BuildStep step={3} color={COLOR}>
-              <p><strong>Conecta la fuente</strong> (ya debería estar en columnas A y L).</p>
-            </BuildStep>
-            <BuildStep step={4} color={COLOR}>
-              <p><strong>Enciende</strong> y verifica 10V.</p>
-            </BuildStep>
+                <BuildStep step={1} color={COLOR}>
+                  <p><strong>Busca 2 resistencias</strong> de ~1kΩ de tu bolsa clasificada.</p>
+                </BuildStep>
+                <BuildStep step={2} color={COLOR}>
+                  <p><strong>Conéctalas en paralelo</strong>: ambas van entre los mismos dos puntos (cable desde <strong>columna A</strong> y cable a <strong>columna L</strong>).</p>
+                </BuildStep>
+                <BuildStep step={3} color={COLOR}>
+                  <p><strong>Conecta la fuente</strong> (ya debería estar en columnas A y L).</p>
+                </BuildStep>
+                <BuildStep step={4} color={COLOR}>
+                  <p><strong>Enciende</strong> y verifica 10V.</p>
+                </BuildStep>
 
-            <Button
-              className="w-full" style={{ backgroundColor: COLOR }}
-              onClick={() => { progress.completePhase(6, 'construye'); setActivePhase('comprueba') }}
-            >
-              ¡Circuito montado! Vamos a medir →
-            </Button>
-          </div>
+                <Button
+                  className="w-full" style={{ backgroundColor: COLOR }}
+                  onClick={() => { progress.completePhase(6, 'construye'); setActivePhase('comprueba') }}
+                >
+                  ¡Circuito montado! Vamos a medir →
+                </Button>
+              </div>
+            ) : (
+              <BreadboardSimulator
+                exercise={BOARD_EXERCISES[6]}
+                color={COLOR}
+                onValidated={() => { progress.completePhase(6, 'construye'); setActivePhase('comprueba') }}
+              />
+            )}
+          </VirtualModeToggle>
         )}
 
         {activePhase === 'comprueba' && (

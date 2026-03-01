@@ -8,6 +8,9 @@ import WarningBox from '@/components/WarningBox'
 import MeasureChecklist from '@/components/MeasureChecklist'
 import Seg7Display, { DIGIT_SEGMENTS } from '@/components/Seg7Display'
 import Seg7PinMap from '@/components/Seg7PinMap'
+import VirtualModeToggle from '@/components/breadboard/VirtualModeToggle'
+import BreadboardSimulator from '@/components/breadboard/BreadboardSimulator'
+import { BOARD_EXERCISES } from '@/data/boardExercises'
 
 const COLOR = '#c084fc'
 
@@ -183,133 +186,143 @@ export default function ModuleFinal({ onBack, onComplete, progress }) {
 
         {/* ─── FASE 3: CONSTRUYE ─── */}
         {activePhase === 'construye' && (
-          <div className="space-y-3">
-            {/* Level selector */}
-            <div className="flex gap-2 mb-2">
-              {[1, 2, 3, 4].map((level) => (
-                <button
-                  key={level}
-                  onClick={() => setBuildLevel(level)}
-                  className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
-                    buildLevel === level
-                      ? 'text-white'
-                      : buildLevel > level
-                      ? 'bg-green-500/20 text-green-400'
-                      : 'bg-secondary text-muted-foreground'
-                  }`}
-                  style={buildLevel === level ? { backgroundColor: COLOR } : undefined}
-                >
-                  {level <= 3 ? `Nivel ${level}` : 'BONUS'}
-                </button>
-              ))}
-            </div>
-
-            {buildLevel === 1 && (
-              <>
-                <h3 className="text-sm font-bold" style={{ color: COLOR }}>
-                  Nivel 1: Enciende UN segmento
-                </h3>
-                <div className="flex justify-center py-2">
-                  <Seg7Display activeSegments={['a']} activeColor={COLOR} size={100} showLabels />
+          <VirtualModeToggle color={COLOR}>
+            {(mode) => mode === 'fisico' ? (
+              <div className="space-y-3">
+                {/* Level selector */}
+                <div className="flex gap-2 mb-2">
+                  {[1, 2, 3, 4].map((level) => (
+                    <button
+                      key={level}
+                      onClick={() => setBuildLevel(level)}
+                      className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
+                        buildLevel === level
+                          ? 'text-white'
+                          : buildLevel > level
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-secondary text-muted-foreground'
+                      }`}
+                      style={buildLevel === level ? { backgroundColor: COLOR } : undefined}
+                    >
+                      {level <= 3 ? `Nivel ${level}` : 'BONUS'}
+                    </button>
+                  ))}
                 </div>
-                <BuildStep step={1} color={COLOR}>
-                  <p>Pincha el display en la breadboard <strong>a caballo del surco central</strong>.</p>
-                </BuildStep>
-                <BuildStep step={2} color={COLOR}>
-                  <p>Identifica un pin de <strong>cátodo común</strong> (pin 3 o 8) → cable a la <strong>columna L</strong> (−)</p>
-                </BuildStep>
-                <BuildStep step={3} color={COLOR}>
-                  <p>Elige un pin de segmento → <strong>R de 330Ω</strong> → cable a la <strong>columna A</strong> (+)</p>
-                </BuildStep>
-                <BuildStep step={4} color={COLOR}>
-                  <p>¿Se enciende? <strong>¡Primer segmento!</strong></p>
-                </BuildStep>
-                <Button
-                  className="w-full" style={{ backgroundColor: COLOR }}
-                  onClick={() => setBuildLevel(2)}
-                >
-                  ¡Funciona! Siguiente nivel →
-                </Button>
-              </>
+
+                {buildLevel === 1 && (
+                  <>
+                    <h3 className="text-sm font-bold" style={{ color: COLOR }}>
+                      Nivel 1: Enciende UN segmento
+                    </h3>
+                    <div className="flex justify-center py-2">
+                      <Seg7Display activeSegments={['a']} activeColor={COLOR} size={100} showLabels />
+                    </div>
+                    <BuildStep step={1} color={COLOR}>
+                      <p>Pincha el display en la breadboard <strong>a caballo del surco central</strong>.</p>
+                    </BuildStep>
+                    <BuildStep step={2} color={COLOR}>
+                      <p>Identifica un pin de <strong>cátodo común</strong> (pin 3 o 8) → cable a la <strong>columna L</strong> (−)</p>
+                    </BuildStep>
+                    <BuildStep step={3} color={COLOR}>
+                      <p>Elige un pin de segmento → <strong>R de 330Ω</strong> → cable a la <strong>columna A</strong> (+)</p>
+                    </BuildStep>
+                    <BuildStep step={4} color={COLOR}>
+                      <p>¿Se enciende? <strong>¡Primer segmento!</strong></p>
+                    </BuildStep>
+                    <Button
+                      className="w-full" style={{ backgroundColor: COLOR }}
+                      onClick={() => setBuildLevel(2)}
+                    >
+                      ¡Funciona! Siguiente nivel →
+                    </Button>
+                  </>
+                )}
+
+                {buildLevel === 2 && (
+                  <>
+                    <h3 className="text-sm font-bold" style={{ color: COLOR }}>
+                      Nivel 2: Forma el número "1"
+                    </h3>
+                    <div className="flex justify-center py-2">
+                      <Seg7Display activeSegments={['b', 'c']} activeColor={COLOR} size={100} showLabels />
+                    </div>
+                    <BuildStep step={1} color={COLOR}>
+                      <p>Conecta el <strong>segmento b</strong> con su propia R de 330Ω a la <strong>columna A</strong> (+)</p>
+                    </BuildStep>
+                    <BuildStep step={2} color={COLOR}>
+                      <p>Conecta el <strong>segmento c</strong> con otra R de 330Ω a la <strong>columna A</strong> (+)</p>
+                    </BuildStep>
+                    <p className="text-xs text-muted-foreground text-center">
+                      Solo 2 resistencias necesarias para el "1"
+                    </p>
+                    <Button
+                      className="w-full" style={{ backgroundColor: COLOR }}
+                      onClick={() => setBuildLevel(3)}
+                    >
+                      ¡El "1" se ve! Siguiente →
+                    </Button>
+                  </>
+                )}
+
+                {buildLevel === 3 && (
+                  <>
+                    <h3 className="text-sm font-bold" style={{ color: COLOR }}>
+                      Nivel 3: Forma el número "7"
+                    </h3>
+                    <div className="flex justify-center py-2">
+                      <Seg7Display activeSegments={['a', 'b', 'c']} activeColor={COLOR} size={100} showLabels />
+                    </div>
+                    <BuildStep step={1} color={COLOR}>
+                      <p>Mantén b y c conectados. Añade el <strong>segmento a</strong> con su R de 330Ω.</p>
+                    </BuildStep>
+                    <p className="text-xs text-muted-foreground text-center">
+                      3 resistencias → ¡El número 7 aparece!
+                    </p>
+                    <Button
+                      className="w-full" style={{ backgroundColor: COLOR }}
+                      onClick={() => setBuildLevel(4)}
+                    >
+                      ¡Perfecto! Último nivel →
+                    </Button>
+                  </>
+                )}
+
+                {buildLevel === 4 && (
+                  <>
+                    <h3 className="text-sm font-bold" style={{ color: COLOR }}>
+                      Nivel 4: El "8" completo (¡todos los segmentos!)
+                    </h3>
+                    <div className="flex justify-center py-2">
+                      <Seg7Display activeSegments={['a','b','c','d','e','f','g']} activeColor={COLOR} size={100} showLabels />
+                    </div>
+                    <BuildStep step={1} color={COLOR}>
+                      <p>Conecta los segmentos restantes: <strong>d, e, f, g</strong> — cada uno con su R de 330Ω.</p>
+                    </BuildStep>
+                    <BuildStep step={2} color={COLOR}>
+                      <p>Ahora tienes <strong>7 resistencias</strong> y el "8" completo. Este es el circuito final.</p>
+                    </BuildStep>
+
+                    <WarningBox>
+                      <strong>BONUS:</strong> Sustituye la conexión directa de UN segmento por: pot → R → segmento. Al girar el pot, ese segmento se atenúa. ¡Has hecho un dimmer!
+                    </WarningBox>
+
+                    <Button
+                      className="w-full" style={{ backgroundColor: COLOR }}
+                      onClick={() => { progress.completePhase('final', 'construye'); setActivePhase('comprueba') }}
+                    >
+                      ¡Circuito completo! Vamos a medir →
+                    </Button>
+                  </>
+                )}
+              </div>
+            ) : (
+              <BreadboardSimulator
+                exercise={BOARD_EXERCISES.final}
+                color={COLOR}
+                onValidated={() => { progress.completePhase('final', 'construye'); setActivePhase('comprueba') }}
+              />
             )}
-
-            {buildLevel === 2 && (
-              <>
-                <h3 className="text-sm font-bold" style={{ color: COLOR }}>
-                  Nivel 2: Forma el número "1"
-                </h3>
-                <div className="flex justify-center py-2">
-                  <Seg7Display activeSegments={['b', 'c']} activeColor={COLOR} size={100} showLabels />
-                </div>
-                <BuildStep step={1} color={COLOR}>
-                  <p>Conecta el <strong>segmento b</strong> con su propia R de 330Ω a la <strong>columna A</strong> (+)</p>
-                </BuildStep>
-                <BuildStep step={2} color={COLOR}>
-                  <p>Conecta el <strong>segmento c</strong> con otra R de 330Ω a la <strong>columna A</strong> (+)</p>
-                </BuildStep>
-                <p className="text-xs text-muted-foreground text-center">
-                  Solo 2 resistencias necesarias para el "1"
-                </p>
-                <Button
-                  className="w-full" style={{ backgroundColor: COLOR }}
-                  onClick={() => setBuildLevel(3)}
-                >
-                  ¡El "1" se ve! Siguiente →
-                </Button>
-              </>
-            )}
-
-            {buildLevel === 3 && (
-              <>
-                <h3 className="text-sm font-bold" style={{ color: COLOR }}>
-                  Nivel 3: Forma el número "7"
-                </h3>
-                <div className="flex justify-center py-2">
-                  <Seg7Display activeSegments={['a', 'b', 'c']} activeColor={COLOR} size={100} showLabels />
-                </div>
-                <BuildStep step={1} color={COLOR}>
-                  <p>Mantén b y c conectados. Añade el <strong>segmento a</strong> con su R de 330Ω.</p>
-                </BuildStep>
-                <p className="text-xs text-muted-foreground text-center">
-                  3 resistencias → ¡El número 7 aparece!
-                </p>
-                <Button
-                  className="w-full" style={{ backgroundColor: COLOR }}
-                  onClick={() => setBuildLevel(4)}
-                >
-                  ¡Perfecto! Último nivel →
-                </Button>
-              </>
-            )}
-
-            {buildLevel === 4 && (
-              <>
-                <h3 className="text-sm font-bold" style={{ color: COLOR }}>
-                  Nivel 4: El "8" completo (¡todos los segmentos!)
-                </h3>
-                <div className="flex justify-center py-2">
-                  <Seg7Display activeSegments={['a','b','c','d','e','f','g']} activeColor={COLOR} size={100} showLabels />
-                </div>
-                <BuildStep step={1} color={COLOR}>
-                  <p>Conecta los segmentos restantes: <strong>d, e, f, g</strong> — cada uno con su R de 330Ω.</p>
-                </BuildStep>
-                <BuildStep step={2} color={COLOR}>
-                  <p>Ahora tienes <strong>7 resistencias</strong> y el "8" completo. Este es el circuito final.</p>
-                </BuildStep>
-
-                <WarningBox>
-                  <strong>BONUS:</strong> Sustituye la conexión directa de UN segmento por: pot → R → segmento. Al girar el pot, ese segmento se atenúa. ¡Has hecho un dimmer!
-                </WarningBox>
-
-                <Button
-                  className="w-full" style={{ backgroundColor: COLOR }}
-                  onClick={() => { progress.completePhase('final', 'construye'); setActivePhase('comprueba') }}
-                >
-                  ¡Circuito completo! Vamos a medir →
-                </Button>
-              </>
-            )}
-          </div>
+          </VirtualModeToggle>
         )}
 
         {/* ─── FASE 4: COMPRUEBA ─── */}

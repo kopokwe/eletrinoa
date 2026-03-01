@@ -8,6 +8,9 @@ import BuildStep from '@/components/BuildStep'
 import WarningBox from '@/components/WarningBox'
 import MeasureChecklist from '@/components/MeasureChecklist'
 import { QUIZZES } from '@/data/quizzes'
+import VirtualModeToggle from '@/components/breadboard/VirtualModeToggle'
+import BreadboardSimulator from '@/components/breadboard/BreadboardSimulator'
+import { BOARD_EXERCISES } from '@/data/boardExercises'
 
 const COLOR = '#f472b6'
 
@@ -77,55 +80,65 @@ export default function Module3({ onBack, onComplete, progress }) {
         )}
 
         {activePhase === 'construye' && (
-          <div className="space-y-3">
-            <WarningBox>
-              <strong>Antes de empezar:</strong> Asegúrate de que la fuente Mean Well está APAGADA. Nunca montes con corriente.
-            </WarningBox>
+          <VirtualModeToggle color={COLOR}>
+            {(mode) => mode === 'fisico' ? (
+              <div className="space-y-3">
+                <WarningBox>
+                  <strong>Antes de empezar:</strong> Asegúrate de que la fuente Mean Well está APAGADA. Nunca montes con corriente.
+                </WarningBox>
 
-            <TheoryBlock title="Tu breadboard Ariston" pageRef="Proyecto" color={COLOR}>
-              <p>Tu Ariston tiene <strong>12 columnas</strong> (A–L) y ~46 filas, con un canal central que separa el lado izquierdo (G–L) del derecho (A–F).</p>
-              <div className="bg-secondary/50 rounded p-3 mt-2 font-mono text-xs space-y-2">
-                <p><strong className="text-red-400">Columna A</strong> (borde derecho) = tu <strong>+V</strong> — cable rojo de la Mean Well aquí</p>
-                <p><strong className="text-blue-400">Columna L</strong> (borde izquierdo) = tu <strong>−</strong> — cable negro de la Mean Well aquí</p>
-              </div>
-              <p className="text-xs text-muted-foreground mt-2">
-                Cada fila tiene 5 agujeros conectados entre sí por lado: B,C,D,E,F (derecha) y G,H,I,J,K (izquierda). Las columnas A y L son los buses de alimentación — recorren toda la placa como las tiras rojas/azules de las breadboards modernas.
-              </p>
-              <div className="bg-secondary/30 rounded p-2 mt-2 font-mono text-[10px] text-muted-foreground text-center whitespace-pre leading-relaxed">
+                <TheoryBlock title="Tu breadboard Ariston" pageRef="Proyecto" color={COLOR}>
+                  <p>Tu Ariston tiene <strong>12 columnas</strong> (A–L) y ~46 filas, con un canal central que separa el lado izquierdo (G–L) del derecho (A–F).</p>
+                  <div className="bg-secondary/50 rounded p-3 mt-2 font-mono text-xs space-y-2">
+                    <p><strong className="text-red-400">Columna A</strong> (borde derecho) = tu <strong>+V</strong> — cable rojo de la Mean Well aquí</p>
+                    <p><strong className="text-blue-400">Columna L</strong> (borde izquierdo) = tu <strong>−</strong> — cable negro de la Mean Well aquí</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Cada fila tiene 5 agujeros conectados entre sí por lado: B,C,D,E,F (derecha) y G,H,I,J,K (izquierda). Las columnas A y L son los buses de alimentación — recorren toda la placa como las tiras rojas/azules de las breadboards modernas.
+                  </p>
+                  <div className="bg-secondary/30 rounded p-2 mt-2 font-mono text-[10px] text-muted-foreground text-center whitespace-pre leading-relaxed">
 {`L  K J I H G │ F E D C B  A
 −  · · · · · │ · · · · ·  +
    ─────────   ─────────
    conectados   conectados`}
+                  </div>
+                </TheoryBlock>
+
+                <BuildStep step={1} color={COLOR}>
+                  <p><strong>Conecta la fuente</strong>: cable rojo a la <strong>columna A</strong> (+), cable negro a la <strong>columna L</strong> (−). NO enciendas todavía.</p>
+                </BuildStep>
+
+                <BuildStep step={2} color={COLOR} warning="Revisa la polaridad: pata larga al lado del +">
+                  <p><strong>Coloca el LED</strong> en la breadboard. Pata larga (ánodo +) hacia la fila conectada a la resistencia.</p>
+                </BuildStep>
+
+                <BuildStep step={3} color={COLOR}>
+                  <p><strong>Coloca la resistencia</strong> (~330Ω o 470Ω de tu bolsa) conectando el ánodo del LED al <strong>+</strong> (tira un cable desde la columna A).</p>
+                </BuildStep>
+
+                <BuildStep step={4} color={COLOR}>
+                  <p><strong>Conecta el cátodo</strong> (pata corta del LED) al <strong>−</strong> (tira un cable a la columna L).</p>
+                </BuildStep>
+
+                <BuildStep step={5} color={COLOR}>
+                  <p><strong>Enciende la fuente</strong>. El LED debería encenderse. Si no brilla, revisa la polaridad (dale la vuelta al LED).</p>
+                </BuildStep>
+
+                <Button
+                  className="w-full" style={{ backgroundColor: COLOR }}
+                  onClick={() => { progress.completePhase(3, 'construye'); setActivePhase('comprueba') }}
+                >
+                  ¡Mi LED brilla! Vamos a medir →
+                </Button>
               </div>
-            </TheoryBlock>
-
-            <BuildStep step={1} color={COLOR}>
-              <p><strong>Conecta la fuente</strong>: cable rojo a la <strong>columna A</strong> (+), cable negro a la <strong>columna L</strong> (−). NO enciendas todavía.</p>
-            </BuildStep>
-
-            <BuildStep step={2} color={COLOR} warning="Revisa la polaridad: pata larga al lado del +">
-              <p><strong>Coloca el LED</strong> en la breadboard. Pata larga (ánodo +) hacia la fila conectada a la resistencia.</p>
-            </BuildStep>
-
-            <BuildStep step={3} color={COLOR}>
-              <p><strong>Coloca la resistencia</strong> (~330Ω o 470Ω de tu bolsa) conectando el ánodo del LED al <strong>+</strong> (tira un cable desde la columna A).</p>
-            </BuildStep>
-
-            <BuildStep step={4} color={COLOR}>
-              <p><strong>Conecta el cátodo</strong> (pata corta del LED) al <strong>−</strong> (tira un cable a la columna L).</p>
-            </BuildStep>
-
-            <BuildStep step={5} color={COLOR}>
-              <p><strong>Enciende la fuente</strong>. El LED debería encenderse. Si no brilla, revisa la polaridad (dale la vuelta al LED).</p>
-            </BuildStep>
-
-            <Button
-              className="w-full" style={{ backgroundColor: COLOR }}
-              onClick={() => { progress.completePhase(3, 'construye'); setActivePhase('comprueba') }}
-            >
-              ¡Mi LED brilla! Vamos a medir →
-            </Button>
-          </div>
+            ) : (
+              <BreadboardSimulator
+                exercise={BOARD_EXERCISES[3]}
+                color={COLOR}
+                onValidated={() => { progress.completePhase(3, 'construye'); setActivePhase('comprueba') }}
+              />
+            )}
+          </VirtualModeToggle>
         )}
 
         {activePhase === 'comprueba' && (

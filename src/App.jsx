@@ -22,6 +22,7 @@ import FormulaSheet from '@/sections/FormulaSheet'
 import Inventory from '@/sections/Inventory'
 import Achievements from '@/sections/Achievements'
 import ExamSimulator from '@/sections/ExamSimulator'
+import VirtualLab from '@/sections/VirtualLab'
 
 const MODULE_COMPONENTS = {
   1: Module1, 2: Module2, 3: Module3, 4: Module4,
@@ -74,6 +75,8 @@ export default function App() {
     if (currentView === 'formulas') return <FormulaSheet onBack={goHome} />
     if (currentView === 'inventory') return <Inventory onBack={goHome} />
     if (currentView === 'achievements') return <Achievements onBack={goHome} achievements={progress.getAchievements()} />
+    if (currentView === 'virtual-lab') return <VirtualLab onBack={goHome} />
+
     if (currentView === 'exam') {
       return (
         <ExamSimulator

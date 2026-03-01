@@ -8,6 +8,9 @@ import BuildStep from '@/components/BuildStep'
 import WarningBox from '@/components/WarningBox'
 import MeasureChecklist from '@/components/MeasureChecklist'
 import { QUIZZES } from '@/data/quizzes'
+import VirtualModeToggle from '@/components/breadboard/VirtualModeToggle'
+import BreadboardSimulator from '@/components/breadboard/BreadboardSimulator'
+import { BOARD_EXERCISES } from '@/data/boardExercises'
 
 const COLOR = '#a78bfa'
 
@@ -84,29 +87,39 @@ export default function Module5({ onBack, onComplete, progress }) {
         )}
 
         {activePhase === 'construye' && (
-          <div className="space-y-3">
-            <WarningBox>Fuente APAGADA antes de montar. Ajusta a 10V antes de conectar el circuito.</WarningBox>
+          <VirtualModeToggle color={COLOR}>
+            {(mode) => mode === 'fisico' ? (
+              <div className="space-y-3">
+                <WarningBox>Fuente APAGADA antes de montar. Ajusta a 10V antes de conectar el circuito.</WarningBox>
 
-            <BuildStep step={1} color={COLOR}>
-              <p><strong>Busca 3 resistencias</strong> de tu bolsa: la más cercana a 220Ω, 330Ω y 1kΩ.</p>
-            </BuildStep>
-            <BuildStep step={2} color={COLOR}>
-              <p><strong>Conéctalas en serie</strong>: R1 → R2 → R3, una tras otra en la breadboard.</p>
-            </BuildStep>
-            <BuildStep step={3} color={COLOR}>
-              <p><strong>Conecta la fuente</strong>: cable desde la <strong>columna A</strong> (+) al inicio de R1, cable desde el final de R3 a la <strong>columna L</strong> (−).</p>
-            </BuildStep>
-            <BuildStep step={4} color={COLOR}>
-              <p><strong>Enciende la fuente</strong> y verifica 10V con el Venlab.</p>
-            </BuildStep>
+                <BuildStep step={1} color={COLOR}>
+                  <p><strong>Busca 3 resistencias</strong> de tu bolsa: la más cercana a 220Ω, 330Ω y 1kΩ.</p>
+                </BuildStep>
+                <BuildStep step={2} color={COLOR}>
+                  <p><strong>Conéctalas en serie</strong>: R1 → R2 → R3, una tras otra en la breadboard.</p>
+                </BuildStep>
+                <BuildStep step={3} color={COLOR}>
+                  <p><strong>Conecta la fuente</strong>: cable desde la <strong>columna A</strong> (+) al inicio de R1, cable desde el final de R3 a la <strong>columna L</strong> (−).</p>
+                </BuildStep>
+                <BuildStep step={4} color={COLOR}>
+                  <p><strong>Enciende la fuente</strong> y verifica 10V con el Venlab.</p>
+                </BuildStep>
 
-            <Button
-              className="w-full" style={{ backgroundColor: COLOR }}
-              onClick={() => { progress.completePhase(5, 'construye'); setActivePhase('comprueba') }}
-            >
-              ¡Circuito montado! Vamos a medir →
-            </Button>
-          </div>
+                <Button
+                  className="w-full" style={{ backgroundColor: COLOR }}
+                  onClick={() => { progress.completePhase(5, 'construye'); setActivePhase('comprueba') }}
+                >
+                  ¡Circuito montado! Vamos a medir →
+                </Button>
+              </div>
+            ) : (
+              <BreadboardSimulator
+                exercise={BOARD_EXERCISES[5]}
+                color={COLOR}
+                onValidated={() => { progress.completePhase(5, 'construye'); setActivePhase('comprueba') }}
+              />
+            )}
+          </VirtualModeToggle>
         )}
 
         {activePhase === 'comprueba' && (
