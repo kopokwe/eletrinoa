@@ -15,6 +15,7 @@ import Module5 from '@/modules/Module5'
 import Module6 from '@/modules/Module6'
 import Module7 from '@/modules/Module7'
 import Module8 from '@/modules/Module8'
+import ModuleFinal from '@/modules/ModuleFinal'
 
 // Sections
 import FormulaSheet from '@/sections/FormulaSheet'
@@ -25,6 +26,7 @@ import ExamSimulator from '@/sections/ExamSimulator'
 const MODULE_COMPONENTS = {
   1: Module1, 2: Module2, 3: Module3, 4: Module4,
   5: Module5, 6: Module6, 7: Module7, 8: Module8,
+  final: ModuleFinal,
 }
 
 export default function App() {
